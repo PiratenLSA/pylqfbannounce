@@ -79,7 +79,7 @@ class LQFBAnnounce(object):
     def __create_email_body_singletype(self, dict_phase):
         for issue in dict_phase.values():
             assert isinstance(issue, LQFBIssue)
-            self.email_body.write('#{0} - {1}issue/show/{0}.html:\n'.format(issue.id, self.url))
+            self.email_body.write('#{0} - {1}issue/show/{0}.html\n'.format(issue.id, self.url))
             for ini in sorted(issue.initiatives.values(), key=lambda x: x.id):
                 assert isinstance(ini, LQFBInitiative)
                 self.email_body.write('-> i{} {}\n'.format(ini.id, ini.name))
@@ -98,7 +98,7 @@ class LQFBAnnounce(object):
 
             for issue in self.closed.values():
                 assert isinstance(issue, LQFBIssue)
-                self.email_body.write('#{0} - {1}issue/show/{0}.html:\n'.format(issue.id, self.url))
+                self.email_body.write('#{0} - {1}issue/show/{0}.html\n'.format(issue.id, self.url))
                 for ini in sorted(issue.initiatives.values(), key=lambda x: x.rank):
                     assert isinstance(ini, LQFBInitiative)
                     self.email_body.write(
