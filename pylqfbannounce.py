@@ -151,5 +151,5 @@ if __name__ == '__main__':
     announce = LQFBAnnounce(1, datetime.date.today() - datetime.timedelta(days=7),
                             'dbname=liquid_feedback_lsa user=www-data', 'http://lqfb.piraten-lsa.de/lsa/')
 
-    announce.send_email('LQFB Announce <announce@lqfb.piraten-lsa.de>', 'sachsen-anhalt_aktive@lists.piraten-lsa.de')
+    announce.send_email('LQFB Announce <announce@lqfb.piraten-lsa.de>', 'Sachsen-Anhalt@lists.piratenpartei.de')
     #announce.send_email('LQFB Announce <announce@lqfb.piraten-lsa.de>', 'christoph.giesel@piraten-lsa.de')
