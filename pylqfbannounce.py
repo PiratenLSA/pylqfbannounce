@@ -138,7 +138,7 @@ class LQFBAnnounce(object):
         today = datetime.date.today()
 
         msg = MIMEText(self.email_body.getvalue(), 'plain', 'utf-8')
-        msg['Subject'] = 'LQFB Zusammenfassung ({})'.format(today.strftime('%d.%m.%Y'))
+        msg['Subject'] = 'LQFB Zusammenfassung (Woche {})'.format(today.strftime('%W'))
         msg['From'] = email_from
         msg['To'] = email_to
 
