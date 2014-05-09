@@ -92,6 +92,10 @@ class LQFBAnnounce(object):
             'Dies ist eine wöchentliche Zusammenfassung der derzeit laufenden Initiativen im LiquidFeedback des '
             'Landesverbands.\n\n')
 
+        if len(self.closed) == 0 and len(self.voting) == 0 and len(self.frozen) == 0 and len(
+                self.discussion) == 0 and len(self.new) == 0:
+            return False
+
         if len(self.closed) > 0:
             self.email_body.write('== Abgeschlossen (letzte Woche) ==\n')
             self.email_body.write('(sortiert nach Rang, "+" = Angenommen, "-" = Abgelehnt)\n\n')
@@ -99,8 +103,10 @@ class LQFBAnnounce(object):
             for issue in self.closed.values():
                 assert isinstance(issue, LQFBIssue)
                 self.email_body.write('#{0} - {1}issue/show/{0}.html\n'.format(issue.id, self.url))
-                for ini in sorted(issue.initiatives.values(), key=lambda x: x.rank):
+                for ini in sorted(issue.initiatives.values(), key=lambda x: x.rank if x and x.rank else 10000):
                     assert isinstance(ini, LQFBInitiative)
+                    if ini.rank is None:
+                        continue
                     self.email_body.write(
                         '-> #{} ({}): i{} {}\n'.format(ini.rank, '+' if ini.eligible else '-', ini.id, ini.name))
                 self.email_body.write('\n')
@@ -113,19 +119,19 @@ class LQFBAnnounce(object):
 
         self.email_body.write('\n')
 
-        if len(self.voting) > 0:
+        if len(self.frozen) > 0:
             self.email_body.write('== Eingefroren ==\n')
             self.__create_email_body_singletype(self.frozen)
 
         self.email_body.write('\n')
 
-        if len(self.voting) > 0:
+        if len(self.discussion) > 0:
             self.email_body.write('== Diskussion ==\n')
             self.__create_email_body_singletype(self.discussion)
 
         self.email_body.write('\n')
 
-        if len(self.voting) > 0:
+        if len(self.new) > 0:
             self.email_body.write('== Neu ==\n')
             self.__create_email_body_singletype(self.new)
 
